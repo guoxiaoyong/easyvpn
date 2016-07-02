@@ -1,0 +1,53 @@
+#!/bin/sh
+
+#========================================
+#
+# input parameters:
+#
+#    tapdev: tap device
+#    tapip: ip for tap device
+#    server_ip: ip for server
+#    server_port: server port
+#
+#========================================
+
+
+ipaddr=$1
+server_ip=$2
+
+if [ $(whoami) != "root" ]; then
+   printf "root priviledge needed!\n"
+   exit 0
+fi
+
+parameter_error=0
+if [ $# -eq 1 ]; then
+   mode=server
+elif [ $# -eq 2 ]; then
+   mode=client
+else
+   parameter_error=1
+fi
+
+if [ $parameter_error -eq 1 ]; then
+
+   printf "input parameter error!\n"
+   exit 0
+fi
+
+PROGNAME=$(pwd)/easyvpn
+
+if ! ifconfig tap0; then
+  ip tuntap add dev tap0 mode tap
+fi
+
+ifconfig tap0 192.168.100.$ipaddr 
+ifconfig tap0 up
+ifconfig tap0 mtu 1200
+
+
+if [ $mode = "server" ]; then
+    $PROGNAME -i tap0 -s -d -p 32000
+else
+    $PROGNAME -i tap0 -c $server_ip -p 32000 -l 30 
+fi
