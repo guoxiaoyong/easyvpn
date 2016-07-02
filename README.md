@@ -1,28 +1,12 @@
-# easyvpn
-easyvpn
-** Xiaoyong Guo **
+# EasyVPN
 
-[a-zA-Z0-9_.]
-more than one white space, 
-tab, new lines are treated as a single white space 
-if there is binary data, it must immediately follows
-dot
+**Xiaoyong Guo**
 
+I wrote EasyVPN about two years ago, inspired by simpletun. 
+http://backreference.org/2010/03/26/tuntap-interface-tutorial/.
 
-evpn management
-get clients
-set mac=01:02:03:04:05:06
-.
-
-
-evpn data
-tunnel frame
-.
-
-
-System Architecture
-
-one server, many clients, all clients connected to the server
+EasyVPN can run as a server or as a client,  
+all clients connected to the server
 packets sent from one clients to another client.
 
 
